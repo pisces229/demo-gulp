@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title>Demo Gulp</title>
+</head>
+<body>
+    <h1>Demo Gulp Channel</h1>
+    <button onclick="signIn()">Sign In</button>
+    <script type="text/javascript">
+        const USER_INFO = 'USER_INFO';
+        const REQ_SIGN_IN = 'REQ_SIGN_IN';
+        const RESP_SIGN_IN = 'RESP_SIGN_IN';
+        const broadcastChannel = new BroadcastChannel("DEMO_GULP_CHANNEL");
+        broadcastChannel.onmessage = (e) => {
+            console.log('onmessage', e);
+            switch (e.data.action) {
+                case REQ_SIGN_IN:
+                    if (sessionStorage.getItem(USER_INFO)) {
+                        broadcastChannel.postMessage({ 
+                            action: RESP_SIGN_IN, 
+                            data: sessionStorage.getItem(USER_INFO),
+                        });
+                    }
+                    break;
+                case RESP_SIGN_IN: 
+                    if (!sessionStorage.getItem(USER_INFO)) {
+                        sessionStorage.setItem(USER_INFO, e.data.data);
+                    }
+                    break;
+            }
+        }
+        const signIn = () => {
+            sessionStorage.setItem(USER_INFO, new Date());
+        }
+        window.setTimeout(() => {
+            if (!sessionStorage.getItem(USER_INFO)) {
+                console.log("postMessage REQ_SIGN_IN");
+                broadcastChannel.postMessage({ 
+                    action: REQ_SIGN_IN 
+                });
+            } else {
+                console.log("SIGN_IN");
+            }
+        }, 500);
+    </script>
+</body>
+</html>
