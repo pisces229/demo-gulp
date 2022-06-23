@@ -8,8 +8,14 @@
 
 ## Gulp Compress
 
-`npm install gulp-clean gulp-htmlmin gulp-clean-css gulp-uglify --save-dev`
+`npm install gulp-clean --save-dev`
 
-### BroadcastChannel Sample - channem.html
+`npm install gulp-htmlmin gulp-clean-css gulp-uglify --save-dev`
+
+`npm install gulp-rename --save-dev`
+
+`npm install sass gulp-sass --save-dev`
+
+### BroadcastChannel Sample - channel.html
 
 
